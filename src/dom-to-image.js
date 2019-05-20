@@ -729,7 +729,7 @@
                     .then(function (dataUrl) {
                         return new Promise(function (resolve, reject) {
                             element.onload = resolve;
-                            element.onerror = reject;
+                            element.onerror = resolve;
                             element.src = dataUrl;
                         });
                     });
