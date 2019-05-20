@@ -40,6 +40,7 @@
      * @param {Object} options - Rendering options
      * @param {Function} options.filter - Should return true if passed node should be included in the output
      *          (excluding node means excluding it's children as well). Not called on the root node.
+     * @param {Function} options.onClone - Calls after copy of node for customize it with styles and elements
      * @param {String} options.bgcolor - color for the background, any valid CSS color value.
      * @param {Number} options.width - width to be applied to node before rendering.
      * @param {Number} options.height - height to be applied to node before rendering.
@@ -56,6 +57,9 @@
         return Promise.resolve(node)
             .then(function (node) {
                 return cloneNode(node, options.filter, true);
+            })
+            .then(function (node) {
+                return options.onClone ? options.onClone(node) : node;
             })
             .then(embedFonts)
             .then(inlineImages)
